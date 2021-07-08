@@ -21,7 +21,6 @@ implied warranty.
 
 procmaps_iterator *pmparser_parse(int pid)
 {
-    procmaps_iterator *maps_it = malloc(sizeof(procmaps_iterator));
     char maps_path[500];
     if (pid >= 0)
     {
@@ -31,6 +30,13 @@ procmaps_iterator *pmparser_parse(int pid)
     {
         sprintf(maps_path, "/proc/self/maps");
     }
+    
+    return pmparser_parse_file(maps_path);
+}
+
+procmaps_iterator *pmparser_parse_file(char *maps_path)
+{
+    procmaps_iterator *maps_it = malloc(sizeof(procmaps_iterator));
     FILE *file = fopen(maps_path, "r");
     if (!file)
     {

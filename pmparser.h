@@ -70,6 +70,14 @@ typedef struct procmaps_iterator
 procmaps_iterator *pmparser_parse(int pid);
 
 /**
+ * pmparser_parse_file
+ * @desc same behavior with pmparser_parse, except input is maps_path
+ * @param maps_path the path to maps file
+ * @return see return of procmaps_iterator
+ */
+procmaps_iterator *pmparser_parse_file(char *maps_path);
+
+/**
  * pmparser_next
  * @description move between areas
  * @param p_procmaps_it the iterator to move on step in the chained list
