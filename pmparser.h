@@ -37,10 +37,11 @@ typedef struct procmaps_struct
     unsigned long length; //< size of the range
 
     char perm[5]; //< permissions rwxp
-    short is_r;   //< rewrote of perm with short flags
-    short is_w;
-    short is_x;
-    short is_p;
+#define PERM_R 8
+#define PERM_W 4
+#define PERM_X 2
+#define PERM_P 1
+    char rwxp;
 
     long offset;  //< offset
     char dev[12]; //< dev major:minor

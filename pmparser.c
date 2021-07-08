@@ -65,10 +65,11 @@ procmaps_iterator *pmparser_parse(int pid)
         tmp->length = (unsigned long)(tmp->addr_end - tmp->addr_start);
         // perm
         strcpy(tmp->perm, perm);
-        tmp->is_r = (perm[0] == 'r');
-        tmp->is_w = (perm[1] == 'w');
-        tmp->is_x = (perm[2] == 'x');
-        tmp->is_p = (perm[3] == 'p');
+        tmp->rwxp = 0;
+        tmp->rwxp |= perm[0] == 'r' ? PERM_R : 0;
+        tmp->rwxp |= perm[1] == 'w' ? PERM_W : 0;
+        tmp->rwxp |= perm[2] == 'x' ? PERM_X : 0;
+        tmp->rwxp |= perm[3] == 'p' ? PERM_P : 0;
 
         // offset
         sscanf(offset, "%lx", &tmp->offset);
