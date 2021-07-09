@@ -7,25 +7,24 @@
 
 int main(int argc, char *argv[])
 {
-    int pid;
+    char *path;
     if (argc == 2)
-        pid = atoi(argv[1]);
+        path = argv[1];
     else
-        pid = -1;
+        path = "/proc/self/maps";
 
-    procmaps_iterator *maps = pmparser_parse(pid);
+    procmaps_iterator *maps = pmparser_parse_file(path);
     if (maps == NULL)
     {
-        printf("[map]: cannot parse the memory map of %d\n", pid);
+        printf("[map]: cannot parse the memory map of %s\n", path);
         return -1;
     }
 
     // iterate over areas
-    procmaps_struct *maps_tmp = NULL;
-
-    while ((maps_tmp = pmparser_next(maps)) != NULL)
+    for (procmaps_struct *map = pmparser_head(maps); map != NULL;
+         map = pmparser_next(maps))
     {
-        pmparser_print(maps_tmp, 0);
+        pmparser_print(map, 0);
         printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     }
 

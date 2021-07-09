@@ -78,6 +78,13 @@ procmaps_iterator *pmparser_parse(int pid);
 procmaps_iterator *pmparser_parse_file(char *maps_path);
 
 /**
+ * @brief Reset iterator and get head element
+ * @param p_procmaps_it The iterator
+ * @return The head element of iterator
+ */
+procmaps_struct *pmparser_head(procmaps_iterator *p_procmaps_it);
+
+/**
  * pmparser_next
  * @description move between areas
  * @param p_procmaps_it the iterator to move on step in the chained list

@@ -109,6 +109,12 @@ procmaps_iterator *pmparser_parse_file(char *maps_path)
     return maps_it;
 }
 
+procmaps_struct *pmparser_head(procmaps_iterator *p_procmaps_it)
+{
+    p_procmaps_it->current = p_procmaps_it->head->next;
+    return p_procmaps_it->head;
+}
+
 procmaps_struct *pmparser_next(procmaps_iterator *p_procmaps_it)
 {
     if (p_procmaps_it->current == NULL)
