@@ -30,7 +30,7 @@ procmaps_iterator *pmparser_parse(int pid)
     {
         sprintf(maps_path, "/proc/self/maps");
     }
-    
+
     return pmparser_parse_file(maps_path);
 }
 
@@ -52,9 +52,8 @@ procmaps_iterator *pmparser_parse_file(char *maps_path)
     procmaps_struct *current_node = list_maps;
     char addr1[20], addr2[20], perm[8], offset[20], dev[10], inode[30],
         pathname[PATH_MAX];
-    while (!feof(file))
+    while (fgets(buf, PROCMAPS_LINE_MAX_LENGTH, file))
     {
-        fgets(buf, PROCMAPS_LINE_MAX_LENGTH, file);
         // allocate a node
         tmp = (procmaps_struct *)malloc(sizeof(procmaps_struct));
         // fill the node
@@ -89,9 +88,11 @@ procmaps_iterator *pmparser_parse_file(char *maps_path)
         // attach the node
         if (ind == 0)
         {
+            ind = 1;
             list_maps = tmp;
             list_maps->next = NULL;
             current_node = list_maps;
+            continue;
         }
         current_node->next = tmp;
         current_node = tmp;
